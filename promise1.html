@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            width: 100%;
+            height: fit-content;
+        }
+        .holds{
+            width: 80%;
+            color: white;
+            background-color: black;
+            height: fit-content;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border-radius: 20px;
+            margin: auto;
+            gap: 30px;
+            padding: 20px;
+        }
+        .val_hold{
+            max-width: 70%;
+            padding: 15px;
+            border: 2px 2px white;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="holds">
+        <h1>THIS IS THE TEXT THAT WE HAVE BEEN LOOKING FOR </h1>
+        <div class="vals"></div>
+    </div>
+    <script>
+        let promise = new Promise((resolve, reject) => {
+            let values = true;
+
+            if (values) {
+                return resolve("the file was sucessfully downloaded")
+            } else {
+                return reject('This operation failed')
+            }
+        })
+
+        console.log(promise);
+
+        promise.then((values) => {
+            console.log(values.split(" ").map((e) => e.slice(0, 3).toUpperCase()).join(" "));
+
+        })
+            .catch((error) => {
+                console.log(error)
+            })
+
+        // let ft = fetch('https://jsonplaceholder.typicode.com/posts');
+
+        // ft.then((data)=>{
+        //    return data.json()
+
+        // }).then((data)=>{
+        //     console.log(data);
+
+        // })
+
+        async function fet() {
+            // try {
+                let res = await fetch('https://jsonplaceholder.typicode.com/posts');
+                let adds = await res.json()
+                console.log(adds );
+                adds.forEach(element => {
+                    let newele = document.createElement("div")
+                    newele.classList.add("val_hold")
+                        let messages = `
+userId:    ${element.userId}<br>
+Id:    ${element.id} <br>
+message: ${element.body}<br>
+title: ${element.title}
+`
+                        console.log(messages);
+                        
+                        newele.innerHTML = messages
+                    document.querySelector('.holds').appendChild(newele)
+                });
+            // } catch (error) {
+            //     console.log("this file does'nt exist");
+
+            // }
+
+        }
+
+        fet()
+        //console.log(ft);
+
+
+    </script>
+</body>
+
+</html>

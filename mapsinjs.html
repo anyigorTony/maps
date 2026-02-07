@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous"> -->
+    --
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap"
+        rel="stylesheet">
+    <!-- Option 1: Include in HTML -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"
+        integrity="sha512-BwHfrr4c9kmRkLw6iXFdzcdWV/PGkVgiIyIWLLlTSXzWQzxuSg4DiQUCpauz/EWjgk5TYQqX/kvn9pG1NpYfqg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js" integrity="sha512-BwHfrr4c9kmRkLw6iXFdzcdWV/PGkVgiIyIWLLlTSXzWQzxuSg4DiQUCpauz/EWjgk5TYQqX/kvn9pG1NpYfqg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css"
+        integrity="sha512-Zcn6bjR/8RZbLEpLIeOwNtzREBAJnUKESxces60Mpoj+2okopSAcSUIUOseddDm0cxnGQzxIR7vJgsLZbdLE3w=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+        integrity="sha384-tViUnnbYAV00FLIhhi3v/dWt3Jxw4gZQcNoSCxCIFNJVCx7/D55/wXsrNIRANwdD" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+        integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Document</title>
+</head>
+<style>
+    * {
+        box-sizing: border-box;
+        padding: 0;
+        margin: 0;
+    }
+
+    body {
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: rgb(214, 229, 161);
+        font-family: sans-serif;
+    }
+
+    .bodies {
+        width: 90%;
+        height: 90%;
+        background-color: rgb(253, 240, 240);
+        border-radius: 20px;
+        display: flex;
+        padding: 1px;
+        box-shadow: 10px 10px 18px gray;
+
+    }
+
+    .explains {
+        width: 30%;
+        background-color: white;
+        border-radius: 0px 10px 10px 0px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        padding: 10px;
+        padding-top: 20px;
+        overflow: scroll;
+        scrollbar-width: 10px;
+        scrollbar-base-color: blue;
+    }
+
+    form {
+        text-align: right;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        align-items: center;
+    }
+
+    input,
+    button {
+        width: 90%;
+        height: 40px;
+        border: none;
+        outline: none;
+        border-radius: 10px;
+    }
+
+    .title {
+        border-bottom: 3px solid gray;
+        padding: 10px 10px;
+
+    }
+
+    .title::placeholder {
+        font-size: 20px;
+    }
+
+    button {
+        background-color: rgb(37, 200, 37);
+        font-size: 1.4rem;
+        color: white;
+    }
+
+    .place {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 85%;
+        height: fit-content;
+        padding: 7px;
+        background-color: lightgray;
+        border-radius: 7px;
+    }
+
+    .place_hold {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 20px;
+        padding-top: 15px;
+        align-items: center;
+    }
+
+    .file_sel {
+        width: 120px;
+        height: 120px;
+        border-radius: 100%;
+        background-color: rgba(161, 160, 133, 0.719);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: rgb(250, 245, 245);
+        font-size: 6rem;
+    }
+
+    #file {
+        display: none;
+    }
+
+    .place img {
+        width: 40px;
+        height: 40px;
+        border-radius: 100%;
+    }
+
+    .bi-map {
+        font-size: 3rem;
+        color: blue;
+    }
+
+    #maps {
+        width: 70%;
+        height: 100%;
+        padding: 10px;
+    }
+    .des{
+        border: 1px solid #000;
+        padding: 5px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    @media (max-width: 768px) {
+        .bodies {
+            flex-direction: column;
+        }
+
+        .explains {
+            width: 100%;
+            height: 40%;
+            border-radius: 0px 0px 10px 10px;
+        }
+
+        #maps {
+            width: 100%;
+            height: 60%;
+        }
+    }
+</style>
+
+<body>
+    <section class="bodies">
+        <div class="explains">
+            <div class="favors"><i class="bi bi-map"></i> favorite place</div>
+            <form action="" class="addplace">
+                <h3>Add New Place</h3>
+                <input type="text" name="" class="title" placeholder="Enter your title">
+
+                <label for="file" class="file_sel"><i class="bi bi-person-video"></i></label>
+                <input type="file" name="file" id="file">
+
+                <button class="add_but">Add Place</button>
+            </form>
+            <div class="places">
+                <h3>Places </h3>
+                <div class="place_hold">
+                    <div class="place">
+                        <img src="images2.jpg" alt="">
+                        <div class="titl">
+                            <h4>Place Title</h4>
+                            <h5 class="name"></h5>
+                        </div>
+                        <div class="catigory">
+                            <h4 class="cati">Catigory</h4>
+                            <h5 class="cati_name"></h5>
+                        </div>
+                    </div>
+                    <div class="place">
+                        <img src="image10.jpg" alt="">
+                        <div class="titl">
+                            <h4>Place Title</h4>
+                            <h5 class="name"></h5>
+                        </div>
+                        <div class="catigory">
+                            <h4 class="cati">Catigory</h4>
+                            <h5 class="cati_name"></h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div id="maps"><img class="imagePlace" src=""></img></div>
+    </section>
+
+    <script>
+        // async function maps() {
+        //     let maps = await fetch("https://www.openstreetmap.org/#map=5/7.95/10.48")
+        //     console.log(maps.json());
+
+        // }
+
+        let imgInp = document.querySelector('#file')
+        let lastchildEvent = null
+        let lastclickEvent = null
+        let map
+        let selectImageData = []
+        let allLocation = []
+        let mapcontainer = document.querySelector(".maps")
+        let imagePlace = document.querySelector('.imagePlace')
+        let add_but = document.querySelector('.add_but')
+        let input = document.querySelector('.title')
+        let select_place = document.querySelector('#file')
+        let plcaces = document.querySelector('.place_hold')
+
+        document.querySelector('.addplace').addEventListener('submit',(e)=>{
+            e.preventDefault()
+        })
+
+
+
+        imgInp.onchange = function(){
+            const file = imgInp.files[0]
+            if (file){
+                const reader = new FileReader();
+                reader.onload = function(e){
+                    selectImageData = e.target.result
+                    if (imagePlace)
+                    imagePlace.src = selectImageData
+                }
+                reader.readAsDataURL(file)
+            }
+        }
+
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function (position) {
+                const { latitude, longitude } = position.coords;
+                console.log(position.coords);
+                console.log(longitude, latitude);
+
+
+                var map = L.map("maps").setView([latitude, longitude], 13);
+                console.log(map);
+                
+                L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                }).addTo(map);  
+
+                L.marker([latitude, longitude]).addTo(map)
+                    .bindPopup('Your are here<br> Easily customizable.')
+                    .openPopup();
+
+                L.circle([latitude, longitude], {
+                    color: 'red',
+                    fillColor: '#f03',
+                    fillOpacity: 0.2,
+                    radius: 500
+                }).addTo(map).bindPopup('You are within 500 meters from this point').openPopup();
+                
+                map.on('click',function (o){
+                    lastclickEvent = o
+                    input.fucus
+                })
+            })
+        }else{
+            alert('Geolocation is not supported by this browser.')
+        }
+
+        add_but.addEventListener('click',()=>{
+            if (lastclickEvent){
+                alert('please click on the map first.')
+                return
+            }
+            const userText = input.value.trim();
+            const selectText = select_place.value;
+
+            if (userText == '' && selectText == '' && selectImageData == ''){
+                alert('please Enter text select a place or choose an image that reserve the place')
+                return;
+            }
+            let popContent = `
+            <div style='text.align:center; width:90px'>
+                ${selectImageData ? `<img src = "${selectImageData}" width="90" height="90">` : ''}
+                <b> ${userText ? userText : 'Unnamed'} </b>
+                <small> ${selectText ? selectText : 'unknown Type'} </small>
+                </div>
+                `
+                const marker = L.marker([lastclickEvent.latlng.lat, lastclickEvent.latlng.lng]).addTo(map)
+                marker.bindPopup(popContent).openPopup()
+
+                const locationInfo = {
+                    title: userText || 'unknown',
+                    type: selectText|| 'unknown',
+                    image: selectImageData || null,
+                    lat: lastclickEvent.latlng.lat,
+                    lng: lastclickEvent.latlng.lng
+                }
+                allLocation.push(locationInfo)
+                console.log(allLocation);
+                updateLocationList()
+        })
+
+        function updateLocationList(){
+            plcaces.innerHTML = ''
+            // allLocation.forEach((loc,index)=>{
+                const div = document.createElement('div')
+                div.setAttribute('class','des')
+                div.innerHTML = `
+                    <h3>${loc.title}</h3>
+                    <p>Type: ${loc.type}</p>
+                    ${loc.image ? `<img src="${loc.image}" width="90" height="90">` : ''}
+                `
+                div.addEventListener('click',()=>{
+                    map.setView([loc.lat,loc.lng],15)
+                    loc.marker.openPopup();
+                })
+                plcaces.appendChild(div)
+            // }
+        }
+
+    </script>
+</body>
+
+</html>
